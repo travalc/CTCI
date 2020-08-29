@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "XVoC5jTmS+3Ldga8R/UBxYMQCBzv7hyS8nFTiDdPaxzGoCxOYyhDk4fBo2A1tc3HhVBBrAjgZcG8aYXDCMB6cQ==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\CTCI\\CTCI.Algorithms\\CTCI.Algorithms.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Travis Alcantara\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\Travis Alcantara\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

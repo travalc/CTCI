@@ -1,0 +1,9 @@
+D:\Projects\CTCI\CTCI.Algorithms\obj\Debug\netstandard2.0\CTCI.Algorithms.csprojAssemblyReference.cache
+D:\Projects\CTCI\CTCI.Algorithms\obj\Debug\netstandard2.0\CTCI.Algorithms.csproj.CoreCompileInputs.cache
+D:\Projects\CTCI\CTCI.Algorithms\obj\Debug\netstandard2.0\CTCI.Algorithms.AssemblyInfoInputs.cache
+D:\Projects\CTCI\CTCI.Algorithms\obj\Debug\netstandard2.0\CTCI.Algorithms.AssemblyInfo.cs
+D:\Projects\CTCI\CTCI.Algorithms\bin\Debug\netstandard2.0\CTCI.Algorithms.deps.json
+D:\Projects\CTCI\CTCI.Algorithms\bin\Debug\netstandard2.0\CTCI.Algorithms.dll
+D:\Projects\CTCI\CTCI.Algorithms\bin\Debug\netstandard2.0\CTCI.Algorithms.pdb
+D:\Projects\CTCI\CTCI.Algorithms\obj\Debug\netstandard2.0\CTCI.Algorithms.dll
+D:\Projects\CTCI\CTCI.Algorithms\obj\Debug\netstandard2.0\CTCI.Algorithms.pdb
