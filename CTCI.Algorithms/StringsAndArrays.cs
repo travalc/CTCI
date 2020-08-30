@@ -305,6 +305,7 @@ namespace CTCI.Algorithms
 
         /// <summary>
         /// Finds all zero elements in a NxM matrix and zeroes out their columns and rows
+        /// O(n) time and space complexity
         /// </summary>
         /// <param name="inputMatrix">int[,] matrix</param>
         /// <returns>int[,] matrix</returns>
