@@ -147,5 +147,221 @@ namespace CTCI.Algorithms
 
             return true;
         }
+
+        /// <summary>
+        /// Checks if 2 strings are <= 1 edit (insert/delete/change) away from being equal
+        /// O(n) time complexity, O(1) space complexity
+        /// </summary>
+        /// <param name="s1">String</param>
+        /// <param name="s2">String</param>
+        /// <returns>True if one edit away, false if not</returns>
+        public static bool IsOneAway(string s1, string s2)
+        {
+            int s1Len = s1.Length;
+            int s2Len = s2.Length;
+            int diff = Math.Abs(s1Len - s2Len);
+            if (diff > 1)
+                return false;
+            
+            if (s1Len != s2Len)
+            {
+                string smallerString, largerString;
+                if (s1Len < s2Len)
+                {
+                    smallerString = s1;
+                    largerString = s2;
+                }
+                else
+                {
+                    smallerString = s2;
+                    largerString = s1;
+                }
+                
+                int smallerPointer = 0;
+                int largerPointer = 0;
+                while (smallerPointer < smallerString.Length && smallerString[smallerPointer] == largerString[largerPointer])
+                {
+                    smallerPointer ++;
+                    largerPointer ++;
+                }
+                if (smallerPointer == smallerString.Length)
+                    return true;
+                
+                largerPointer ++;
+                while (smallerPointer < smallerString.Length)
+                {
+                    if (smallerString[smallerPointer] != largerString[largerPointer])
+                        return false;
+                    smallerPointer ++;
+                    largerPointer ++;
+                }
+
+                return true;
+            }
+
+            bool edited = false;
+            int pointer = 0;
+            while (pointer < s1Len)
+            {
+                if (s1[pointer] != s2[pointer])
+                {
+                    if (edited)
+                        return false;
+                    edited = true;
+                }
+                pointer ++;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Compresses a string to less than length of input string.
+        /// O(n) time complexity, O(n) space complexity
+        /// </summary>
+        /// <param name="s">string</param>
+        /// <returns>If compressed string is shorter than input, returns a compressed string. Otherwise original is returned</returns>
+        public static string CompressString(string s)
+        {
+            if (s.Length < 3)
+                return s;
+            
+            Dictionary<char, int> charDict = new Dictionary<char, int>();
+            foreach (char c in s)
+            {
+                if (!charDict.ContainsKey(c))
+                    charDict.Add(c, 1);
+                else
+                    charDict[c] ++;
+            }
+            if (charDict.Count * 2 >= s.Length)
+                return s;
+            
+            StringBuilder sb = new StringBuilder();
+            foreach (KeyValuePair<char, int> entry in charDict)
+            {
+                string coded = entry.Key + entry.Value.ToString();
+                sb.Append(coded);
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Rotates matrix in place by 90 degrees.
+        /// O(n) time complexity, O(n) space
+        /// </summary>
+        /// <param name="inputMatrix"></param>
+        /// <returns></returns>
+        public static int[,] RotateMatrix(int[,] inputMatrix)
+        {
+            Console.WriteLine(inputMatrix.GetLength(0));
+            if (inputMatrix.Length == 0)
+                return inputMatrix;
+            
+            int layers = inputMatrix.GetLength(0) / 2;
+            int min = 0;
+            int max = inputMatrix.GetLength(0) - 1;
+
+            while (layers > 0)
+            {
+                MatrixPointer p1 = new MatrixPointer(min, min);
+                MatrixPointer p2 = new MatrixPointer(min, max);
+                MatrixPointer p3 = new MatrixPointer(max, max);
+                MatrixPointer p4 = new MatrixPointer(max, min);
+
+                int i = min;
+                while (i < max)
+                {
+                    SwapPointers(inputMatrix, p1, p2, p3, p4);
+                    p1.Col ++;
+                    p2.Row ++;
+                    p3.Col --;
+                    p4.Row --;
+                    i ++;
+                }
+                min ++;
+                max --;
+                layers --;
+            }
+
+            return inputMatrix;
+        }
+
+        private static void SwapPointers(int[,] inputMatrix, MatrixPointer p1, MatrixPointer p2, MatrixPointer p3, MatrixPointer p4)
+        {
+            int temp1, temp2; 
+            temp1 = inputMatrix[p2.Row, p2.Col];
+            inputMatrix[p2.Row, p2.Col] = inputMatrix[p1.Row, p1.Col];
+            temp2 = temp1;
+            temp1 = inputMatrix[p3.Row, p3.Col];
+            inputMatrix[p3.Row, p3.Col] = temp2;
+            temp2 = temp1;
+            temp1 = inputMatrix[p4.Row, p4.Col];
+            inputMatrix[p4.Row, p4.Col] = temp2;
+            temp2 = temp1;
+            inputMatrix[p1.Row, p1.Col] = temp1;
+        }
+
+        /// <summary>
+        /// Finds all zero elements in a NxM matrix and zeroes out their columns and rows
+        /// </summary>
+        /// <param name="inputMatrix">int[,] matrix</param>
+        /// <returns>int[,] matrix</returns>
+        public static int[,] ZeroMatrix(int[,] inputMatrix)
+        {
+            if (inputMatrix.GetLength(0) == 0 || inputMatrix.GetLength(1) == 0)
+                return inputMatrix;
+            
+            List<MatrixPointer> zeroList = new List<MatrixPointer>();
+            for (int row = 0; row < inputMatrix.GetLength(0); row ++)
+            {
+                for (int col = 0; col < inputMatrix.GetLength(1); col ++)
+                {
+                    if (inputMatrix[row, col] == 0)
+                    {
+                        MatrixPointer zeroPointer = new MatrixPointer(row, col);
+                        zeroList.Add(zeroPointer);
+                    }
+                }
+            }
+            if (zeroList.Count == 0)
+                return inputMatrix;
+            
+            foreach (MatrixPointer pointer in zeroList)
+            {
+                int zeroRow = pointer.Row;
+                int zeroCol = pointer.Col;
+
+                int currRow = 0;
+                while (currRow < inputMatrix.GetLength(0))
+                {
+                    if (inputMatrix[currRow, zeroCol] != 0)
+                        inputMatrix[currRow, zeroCol] = 0;
+                    currRow ++;
+                }
+
+                int currCol = 0;
+                while (currCol < inputMatrix.GetLength(1))
+                {
+                    if (inputMatrix[zeroRow, currCol] != 0)
+                        inputMatrix[zeroRow, currCol] = 0;
+                    currCol ++;
+                }
+            }
+
+            return inputMatrix;
+        }
+    }
+
+    public class MatrixPointer
+    {
+        public int Row;
+        public int Col;
+        public MatrixPointer(int row, int col)
+        {
+            Row = row;
+            Col = col;
+        }
     }
 }
