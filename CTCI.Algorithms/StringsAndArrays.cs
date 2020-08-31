@@ -353,6 +353,39 @@ namespace CTCI.Algorithms
 
             return inputMatrix;
         }
+
+        /// <summary>
+        /// Checks if one string is a rotation of another string
+        /// O(n) time, O(n) space
+        /// </summary>
+        /// <param name="s1">string to be checked if rotation of</param>
+        /// <param name="s2">string check to be a rotation of s1</param>
+        /// <returns>bool: true if s2 is rotation of s1</returns>
+        public static bool IsRotation(string s1, string s2)
+        {
+            if (s1.Length != s2.Length)
+                return false;
+            if (s1.Length == 0 && s2.Length == 0)
+                return false;
+            if (s1 == s2)
+                return true;
+            if (s1.Length == 1 && s2.Length == 1)
+                return false;
+            string s1Concatenated = s1 + s1;
+            
+            return IsSubstring(s1Concatenated, s2);
+        }
+
+        /// <summary>
+        /// Helper function for checking if one string is substring of another
+        /// </summary>
+        /// <param name="s1">container string</param>
+        /// <param name="s2">containee string</param>
+        /// <returns>bool, true if s2 is substring of s1</returns>
+        public static bool IsSubstring(string s1, string s2)
+        {
+            return s1.Contains(s2);
+        }
     }
 
     /// <summary>

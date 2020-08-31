@@ -323,5 +323,63 @@ namespace CTCI.Algorithms.Test
             CollectionAssert.AreEqual(twoZeroMatrixExpected, twoZeroMatrixActual);
             CollectionAssert.AreEqual(emptyMatrixExpected, emptyMatrixActual);
         }
+
+        [TestMethod]
+        public void TestIsSubstring()
+        {
+            // Arrange
+            string s1 = "category";
+            string s2 = "cat";
+
+            string s3 = "category";
+            string s4 = "dog";
+
+            // Act
+            bool trueValue = StringsAndArrays.IsSubstring(s1, s2);
+            bool falseValue = StringsAndArrays.IsSubstring(s3, s4);
+
+            // Assert
+            Assert.IsTrue(trueValue);
+            Assert.IsFalse(falseValue);
+        }
+
+        [TestMethod]
+        public void TestIsRotation()
+        {
+            // Arrange
+            string unequalLengthsS1 = "cat";
+            string unequalLengthS2 = "ca";
+
+            string emptyS1 = "";
+            string emptyS2 = "";
+
+            string equalS1 = "dog";
+            string equalS2 = "dog";
+
+            string singleCharFalseS1 = "c";
+            string singleCharFalseS2 = "d";
+
+            string commonCaseTrueS1 = "erbottlewat";
+            string commonCaseTrueS2 = "waterbottle";
+
+            string commonCaseFalseS1 = "erbottlewar";
+            string commonCaseFalseS2 = "waterbottle";
+
+            // Act
+            bool unequalLengthResult = StringsAndArrays.IsRotation(unequalLengthsS1, unequalLengthS2);
+            bool emptyResult = StringsAndArrays.IsRotation(emptyS1, emptyS2);
+            bool equalResult = StringsAndArrays.IsRotation(equalS1, equalS2);
+            bool singleCharFalseResult = StringsAndArrays.IsRotation(singleCharFalseS1, singleCharFalseS2);
+            bool commonCaseTrueResult = StringsAndArrays.IsRotation(commonCaseTrueS1, commonCaseTrueS2);
+            bool commonCaseFalseResult = StringsAndArrays.IsRotation(commonCaseFalseS1, commonCaseFalseS2);
+
+            // Assert
+            Assert.IsFalse(unequalLengthResult);
+            Assert.IsFalse(emptyResult);
+            Assert.IsTrue(equalResult);
+            Assert.IsFalse(singleCharFalseResult);
+            Assert.IsTrue(commonCaseTrueResult);
+            Assert.IsFalse(commonCaseFalseResult);
+        }
     }
 }
