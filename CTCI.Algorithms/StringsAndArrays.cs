@@ -355,6 +355,9 @@ namespace CTCI.Algorithms
         }
     }
 
+    /// <summary>
+    /// Helper class for tracking pointers in matrix problems.
+    /// </summary>
     public class MatrixPointer
     {
         public int Row;
