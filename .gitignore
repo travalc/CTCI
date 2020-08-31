@@ -220,6 +220,10 @@ project.lock.json
 *.feature.xlsx.*
 *.Specs_*.html
 
+# temp obj files
+.\CTCI.Algorithms\obj
+.\CTCI.Algorithms.Test\obj
+
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
