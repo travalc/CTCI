@@ -8,6 +8,12 @@ namespace CTCI.Algorithms
     /// </summary>
     public static class LinkedLists
     {
+        /// <summary>
+        /// Given a SLLNode head node, and int data, deletes first node containing this value.
+        /// </summary>
+        /// <param name="headNode">SLLNode</param>
+        /// <param name="data">int</param>
+        /// <returns>SLLNode</returns>
         public static SLLNode DeleteNode(SLLNode headNode, int data)
         {
             if (headNode == null)
