@@ -4,6 +4,9 @@ using System.Text;
 
 namespace CTCI.Algorithms
 {
+    /// <summary>
+    /// Algorithms for strings and arrays problems.
+    /// </summary>
     public static class StringsAndArrays
     {
         /// <summary>
