@@ -1,5 +1,6 @@
 using CTCI.DataStructures;
 using System;
+using System.Collections.Generic;
 
 namespace CTCI.Algorithms
 {
@@ -30,6 +31,47 @@ namespace CTCI.Algorithms
                     currNode.Next = currNode.Next.Next;
                     return headNode;
                 }
+                currNode = currNode.Next;
+            }
+
+            return headNode;
+        }
+
+        /// <summary>
+        /// Given a SLL node, removes nodes with duplicate values
+        /// O(n) time, O(n) space
+        /// </summary>
+        /// <param name="headNode">SLLNode</param>
+        /// <returns>SLLNode</returns>
+        public static SLLNode RemoveDups(SLLNode headNode)
+        {
+            if (headNode == null)
+                return null;
+            if (headNode.Next == null)
+                return headNode;
+            
+            HashSet<int> set = new HashSet<int>();
+            set.Add(headNode.Data);
+
+            SLLNode currNode = headNode;
+            while (currNode.Next != null)
+            {
+                if (set.Contains(currNode.Next.Data))
+                {
+                    SLLNode newNextNode = currNode.Next.Next;
+                    while (newNextNode != null && set.Contains(newNextNode.Data))
+                        newNextNode = newNextNode.Next;
+                    
+                    currNode.Next = newNextNode;
+                    if (newNextNode == null)
+                        return headNode;
+                    set.Add(newNextNode.Data);
+                }
+                else
+                {
+                    set.Add(currNode.Next.Data);
+                }
+
                 currNode = currNode.Next;
             }
 
