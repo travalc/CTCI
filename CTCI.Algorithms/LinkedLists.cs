@@ -77,5 +77,35 @@ namespace CTCI.Algorithms
 
             return headNode;
         }
+
+        /// <summary>
+        /// Given a SLL Node, return the kth to last node. Tail is k == 1
+        /// O(n) time complexity, O(1) space complexity
+        /// </summary>
+        /// <param name="head">SLLNode</param>
+        /// <param name="k">int</param>
+        /// <returns>SLLNode</returns>
+        public static SLLNode ReturnKthToLast(SLLNode head, int k)
+        {
+            if (head == null)
+                return null;
+            
+            int count = 1;
+            SLLNode pointer = head;
+            while (pointer.Next != null)
+            {
+                pointer = pointer.Next;
+                count ++;
+            }
+            pointer = head;
+            int numMoves = count - k;
+            while (numMoves > 0)
+            {
+                pointer = pointer.Next;
+                numMoves --;
+            }
+
+            return pointer;
+        }
     }
 }

@@ -82,5 +82,40 @@ namespace CTCI.Algorithms.Test
             Assert.AreEqual(3, oneDupeNodeResult.Next.Next.Data);
             Assert.IsNull(multipleDupesNodeResult.Next);
         }
+
+        [TestMethod]
+        public void TestReturnKthToLast()
+        {
+            // Arrange
+
+            // Null head
+            SLLNode nullHead = null;
+            int kNull = 0;
+
+            // Single node
+            SLLNode singleNodeHead = new SLLNode(1);
+            int kSingleNode = 1;
+            int expectedSingleNodeVal = 1;
+
+            // Multiple nodes
+            SLLNode multiNodeHead = new SLLNode(1);
+            multiNodeHead.AddToTail(2);
+            multiNodeHead.AddToTail(3);
+            multiNodeHead.AddToTail(4);
+            int kMultiNode = 2;
+            int expectedMultiNodeVal = 3;
+
+            // Act
+            SLLNode nullHeadResult = LinkedLists.ReturnKthToLast(nullHead, kNull);
+            SLLNode singleNodeResult = LinkedLists.ReturnKthToLast(singleNodeHead, kSingleNode);
+            int actualSingleNodeVal = singleNodeResult.Data;
+            SLLNode multiNodeResult = LinkedLists.ReturnKthToLast(multiNodeHead, kMultiNode);
+            int actualMultiNodeVal = multiNodeResult.Data;
+
+            // Assert
+            Assert.IsNull(nullHeadResult);
+            Assert.AreEqual(expectedSingleNodeVal, actualSingleNodeVal);
+            Assert.AreEqual(expectedMultiNodeVal, actualMultiNodeVal);
+        }
     }
 }
