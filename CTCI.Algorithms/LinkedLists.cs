@@ -107,5 +107,88 @@ namespace CTCI.Algorithms
 
             return pointer;
         }
+
+        /// <summary>
+        /// Given SLLNode (not head or tail or null), delete it from the list it is in
+        /// O(n) time, O(1) space
+        /// </summary>
+        /// <param name="node">SLLNoid</param>
+        /// <returns>void</returns>
+        public static void DeleteMiddleNode(SLLNode node)
+        {
+            SLLNode p1 = node;
+            SLLNode p2 = node.Next;
+            SLLNode p3 = node.Next.Next;
+
+            while (true)
+            {
+                p1.Data = p2.Data;
+                if (p3 == null)
+                {
+                    p1.Next = p3;
+                    break;
+                }
+                p1 = p1.Next;
+                p2 = p2.Next;
+                p3 = p3.Next;
+            }
+
+            return;
+        }
+
+        /// <summary>
+        /// Given SLLNode and integer, partitions list by x (does not reorder list ascending)
+        /// O(n) time, O(n) space
+        /// </summary>
+        /// <param name="head">SLLNode</param>
+        /// <param name="x">int</param>
+        /// <returns></returns>
+        public static SLLNode Partition(SLLNode head, int x)
+        {
+            if (head == null)
+                return head;
+            
+            SLLNode smaller = null;
+            SLLNode larger = null;
+            SLLNode p1 = null;
+            SLLNode p2 = null;
+            SLLNode currNode = head;
+            while (currNode != null)
+            {
+                if (currNode.Data < x)
+                {
+                    if (smaller == null)
+                    {
+                        smaller = currNode;
+                        p1 = smaller;
+                    }
+                    else
+                    {
+                        p1.Next = currNode;
+                        p1 = p1.Next;
+                    }
+                }
+                else
+                {
+                    if (larger == null)
+                    {
+                        larger = currNode;
+                        p2 = larger;
+                    }
+                    else
+                    {
+                        p2.Next = currNode;
+                        p2 = p2.Next;
+                    }
+                }
+                currNode = currNode.Next;
+            }
+
+            if (smaller == null)
+                return larger;
+            
+            p1.Next = larger;
+            return smaller;
+        }
     }
 }

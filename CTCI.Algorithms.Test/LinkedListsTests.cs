@@ -117,5 +117,73 @@ namespace CTCI.Algorithms.Test
             Assert.AreEqual(expectedSingleNodeVal, actualSingleNodeVal);
             Assert.AreEqual(expectedMultiNodeVal, actualMultiNodeVal);
         }
+
+        [TestMethod]
+        public void TestDeleteMiddleNode()
+        {
+            // Arrange
+            SLLNode head = new SLLNode(1);
+            SLLNode second = new SLLNode(2);
+            SLLNode third = new SLLNode(3);
+            SLLNode fourth = new SLLNode(4);
+            head.Next = second;
+            second.Next = third;
+            third.Next = fourth;
+
+            // Act
+            LinkedLists.DeleteMiddleNode(second);
+
+            // Assert
+            Assert.AreEqual(head.Next.Data, 3);
+            Assert.AreEqual(second.Next.Data, 4);
+            Assert.IsNull(third.Next);
+        }
+
+        [TestMethod]
+        public void TestPartition()
+        {
+            // Arrange
+
+            // Null head
+            SLLNode nullHead = null;
+            int xNullHead = 3;
+
+            // Single node
+            SLLNode singleNode = new SLLNode(3);
+            int xSingleNode = 2;
+
+            // All smaller
+            SLLNode allSmallerNode = new SLLNode(2);
+            allSmallerNode.AddToTail(1);
+            allSmallerNode.AddToTail(0);
+            int xAllSmallerNode = 3;
+
+            // Common case
+            SLLNode commonCaseNode = new SLLNode(8);
+            commonCaseNode.AddToTail(3);
+            commonCaseNode.AddToTail(2);
+            commonCaseNode.AddToTail(7);
+            int xCommonCaseNode = 7;
+
+            // Act
+            SLLNode nullHeadResult = LinkedLists.Partition(nullHead, xNullHead);
+            SLLNode singleNodeResult = LinkedLists.Partition(singleNode, xSingleNode);
+            SLLNode allSmallerNodeResult = LinkedLists.Partition(allSmallerNode, xAllSmallerNode);
+            SLLNode commonCaseNodeResult = LinkedLists.Partition(commonCaseNode, xCommonCaseNode);
+
+            // Assert
+            Assert.IsNull(nullHeadResult);
+            Assert.AreEqual(singleNodeResult.Data, 3);
+            Assert.IsNull(singleNodeResult.Next);
+            Assert.AreEqual(allSmallerNodeResult.Data, 2);
+            Assert.AreEqual(allSmallerNodeResult.Next.Data, 1);
+            Assert.AreEqual(allSmallerNodeResult.Next.Next.Data, 0);
+            Assert.IsNull(allSmallerNodeResult.Next.Next.Next);
+            Assert.AreEqual(commonCaseNodeResult.Data, 3);
+            Assert.AreEqual(commonCaseNodeResult.Next.Data, 2);
+            Assert.AreEqual(commonCaseNodeResult.Next.Next.Data, 8);
+            Assert.AreEqual(commonCaseNodeResult.Next.Next.Next.Data, 7);
+            Assert.IsNull(commonCaseNodeResult.Next.Next.Next.Next);
+        }
     }
 }
