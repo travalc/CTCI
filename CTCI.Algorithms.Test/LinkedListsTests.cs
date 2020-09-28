@@ -224,5 +224,43 @@ namespace CTCI.Algorithms.Test
             Assert.AreEqual(commonCaseResult.Next.Data, 2);
             Assert.AreEqual(commonCaseResult.Next.Next.Data, 9);
         }
+
+        [TestMethod]
+        public void TestIsPalindrome()
+        {
+            // Arrange
+
+            // null head
+            SLLNode nullHead = null;
+
+            // single node
+            SLLNode singleNode = new SLLNode(1);
+
+            // not a palindrome
+            SLLNode notAPalindrome = new SLLNode(1);
+            notAPalindrome.AddToTail(2);
+
+            // is a palindrome
+            SLLNode isAPalindrome = new SLLNode(1);
+            isAPalindrome.AddToTail(1);
+            isAPalindrome.AddToTail(1);
+            isAPalindrome.AddToTail(2);
+            isAPalindrome.AddToTail(2);
+            isAPalindrome.AddToTail(1);
+            isAPalindrome.AddToTail(1);
+            isAPalindrome.AddToTail(1);
+
+            // Act
+            bool nullHeadResult = LinkedLists.IsPalindrome(nullHead);
+            bool singleNodeResult = LinkedLists.IsPalindrome(singleNode);
+            bool notAPalindromeResult = LinkedLists.IsPalindrome(notAPalindrome);
+            bool isAPalindromeResult = LinkedLists.IsPalindrome(isAPalindrome);
+
+            // Assert
+            Assert.IsFalse(nullHeadResult);
+            Assert.IsTrue(singleNodeResult);
+            Assert.IsFalse(notAPalindromeResult);
+            Assert.IsTrue(isAPalindromeResult);
+        }
     }
 }

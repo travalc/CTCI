@@ -1,5 +1,6 @@
 using CTCI.DataStructures;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace CTCI.Algorithms
@@ -191,6 +192,13 @@ namespace CTCI.Algorithms
             return smaller;
         }
 
+        /// <summary>
+        /// Given 2 linked lists representing numbers, ones digit comes first, return linked list representing the sum
+        /// O(n) time, O(n) space
+        /// </summary>
+        /// <param name="head1">SLLNode</param>
+        /// <param name="head2">SLLNode</param>
+        /// <returns>SLLNode</returns>
         public static SLLNode SumLists(SLLNode head1, SLLNode head2)
         {
             if (head1 == null && head2 == null)
@@ -232,6 +240,49 @@ namespace CTCI.Algorithms
             }
 
             return sumListHead;
+        }
+
+        /// <summary>
+        /// Given SLL head node, determines if values form a palindrome
+        /// O(n) time, O(n) space
+        /// </summary>
+        /// <param name="head">SLLNode</param>
+        /// <returns>bool</returns>
+        public static bool IsPalindrome(SLLNode head)
+        {
+            if (head == null)
+                return false;
+            if (head.Next == null)
+                return true;
+
+            Stack numStack = new Stack();
+            SLLNode p1 = head;
+            SLLNode p2 = head.Next;
+            while (true)
+            {
+                numStack.Push(p1.Data);
+                if (p2.Next != null && p2.Next.Next != null)
+                {
+                    p1 = p1.Next;
+                    p2 = p2.Next.Next;
+                }
+                else
+                    break;
+            }
+            
+            if (p2.Next != null)
+                p1 = p1.Next.Next;
+            else
+                p1 = p1.Next;
+            while (p1 != null)
+            {
+                int valToCompare = (int)numStack.Pop();
+                if (p1.Data != valToCompare)
+                    return false;
+                p1 = p1.Next;
+            }
+
+            return true;
         }
     }
 }
