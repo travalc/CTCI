@@ -185,5 +185,44 @@ namespace CTCI.Algorithms.Test
             Assert.AreEqual(commonCaseNodeResult.Next.Next.Next.Data, 7);
             Assert.IsNull(commonCaseNodeResult.Next.Next.Next.Next);
         }
+
+        [TestMethod]
+        public void TestSumLists()
+        {
+            // Arrange
+
+            // Both null
+            SLLNode nullNode1 = null;
+            SLLNode nullNode2 = null;
+
+            // head1 null
+            SLLNode nullHead1 = null;
+            SLLNode nonNullHead2 = new SLLNode(1);
+
+            // head2 null
+            SLLNode nonNullHead1 = new SLLNode(2);
+            SLLNode nullHead2 = null;
+
+            // common case
+            SLLNode commonCaseHead1 = new SLLNode(1);
+            commonCaseHead1.AddToTail(0);
+            commonCaseHead1.AddToTail(9);
+            SLLNode commonCaseHead2 = new SLLNode(3);
+            commonCaseHead2.AddToTail(2);
+
+            // Act
+            SLLNode bothNullResult = LinkedLists.SumLists(nullNode1, nullNode2);
+            SLLNode nullHead1Result = LinkedLists.SumLists(nullHead1, nonNullHead2);
+            SLLNode nullHead2Result = LinkedLists.SumLists(nonNullHead1, nullHead2);
+            SLLNode commonCaseResult = LinkedLists.SumLists(commonCaseHead1, commonCaseHead2);
+
+            // Assert
+            Assert.IsNull(bothNullResult);
+            Assert.AreEqual(nullHead1Result.Data, 1);
+            Assert.AreEqual(nullHead2Result.Data, 2);
+            Assert.AreEqual(commonCaseResult.Data, 4);
+            Assert.AreEqual(commonCaseResult.Next.Data, 2);
+            Assert.AreEqual(commonCaseResult.Next.Next.Data, 9);
+        }
     }
 }

@@ -190,5 +190,48 @@ namespace CTCI.Algorithms
             p1.Next = larger;
             return smaller;
         }
+
+        public static SLLNode SumLists(SLLNode head1, SLLNode head2)
+        {
+            if (head1 == null && head2 == null)
+                return null;
+            if (head1 == null)
+                return head2;
+            if (head2 == null)
+                return head1;
+            
+            int num1 = 0, num2 = 0, multiplier = 1, sum;
+            SLLNode currNode = head1;
+            while (currNode != null)
+            {
+                int numToAdd = multiplier * currNode.Data;
+                num1 += numToAdd;
+                multiplier *= 10;
+                currNode = currNode.Next;
+            }
+            multiplier = 1;
+            currNode = head2;
+            while (currNode != null)
+            {
+                int numToAdd = multiplier * currNode.Data;
+                num2 += numToAdd;
+                multiplier *= 10;
+                currNode = currNode.Next;
+            }
+
+            sum = num1 + num2;
+            SLLNode sumListHead = null;
+            while (sum > 0)
+            {
+                int digit = sum % 10;
+                if (sumListHead == null)
+                    sumListHead = new SLLNode(digit);
+                else
+                    sumListHead.AddToTail(digit);
+                sum /= 10;
+            }
+
+            return sumListHead;
+        }
     }
 }
