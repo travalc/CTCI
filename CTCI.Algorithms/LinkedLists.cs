@@ -284,5 +284,37 @@ namespace CTCI.Algorithms
 
             return true;
         }
+
+        /// <summary>
+        /// Given 2 linked lists, return intersecting node if exists.
+        /// O(n) time, O(n) space
+        /// </summary>
+        /// <param name="head1">SLLNode</param>
+        /// <param name="head2">SLLNode</param>
+        /// <returns>SLLNode</returns>
+        public static SLLNode Instersection(SLLNode head1, SLLNode head2)
+        {
+            if (head1 == null || head2 == null)
+                return null;
+            if (Object.ReferenceEquals(head1, head2))
+                return head1;
+
+            HashSet<SLLNode> set = new HashSet<SLLNode>();
+            SLLNode currNode = head1;
+            while (currNode != null)
+            {
+                set.Add(currNode);
+                currNode = currNode.Next;
+            }
+            currNode = head2;
+            while (currNode != null)
+            {
+                if (set.Contains(currNode))
+                    return currNode;
+                currNode = currNode.Next;
+            }
+
+            return null;
+        }
     }
 }

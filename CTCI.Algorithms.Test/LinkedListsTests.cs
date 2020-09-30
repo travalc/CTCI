@@ -262,5 +262,50 @@ namespace CTCI.Algorithms.Test
             Assert.IsFalse(notAPalindromeResult);
             Assert.IsTrue(isAPalindromeResult);
         }
+
+        [TestMethod]
+        public void TestIntersection()
+        {
+            // Arrange
+
+            // either null
+            SLLNode nullHead1 = null;
+            SLLNode nullHead2 = new SLLNode(1);
+
+            // first
+            SLLNode firstHead1 = new SLLNode(99);
+            SLLNode firstHead2 = firstHead1;
+
+            // common case intersection
+            SLLNode commonCase1 = new SLLNode(2);
+            SLLNode commonCaseNext1 = new SLLNode(3);
+            commonCase1.Next = commonCaseNext1;
+            SLLNode commonCaseNextNext1 = new SLLNode(4);
+            commonCaseNext1.Next = commonCaseNextNext1;
+            SLLNode commonCaseNextNextNext1 = new SLLNode(5);
+            commonCaseNextNext1 = commonCaseNextNextNext1;
+            SLLNode commonCase2 = new SLLNode(10);
+            SLLNode commonCaseNext2 = new SLLNode(11);
+            commonCase2.Next = commonCaseNext2;
+            commonCaseNext2.Next = commonCaseNextNext1;
+
+            // no intersection
+            SLLNode noIntersectionHead1 = new SLLNode(30);
+            SLLNode noIntersectionHead2 = new SLLNode(40);
+            noIntersectionHead1.AddToTail(53);
+            noIntersectionHead2.AddToTail(64);
+
+            // Act
+            SLLNode nullHeadResult = LinkedLists.Instersection(nullHead1, nullHead2);
+            SLLNode firstHeadResult = LinkedLists.Instersection(firstHead1, firstHead2);
+            SLLNode commonCaseResult = LinkedLists.Instersection(commonCase1, commonCase2);
+            SLLNode noIntersectionResult = LinkedLists.Instersection(noIntersectionHead1, noIntersectionHead2);
+
+            // Assert
+            Assert.IsNull(nullHeadResult);
+            Assert.AreEqual(firstHeadResult, firstHead1);
+            Assert.ReferenceEquals(commonCaseResult, commonCaseNextNext1);
+            Assert.IsNull(noIntersectionResult);
+        }
     }
 }
