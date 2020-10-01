@@ -316,5 +316,37 @@ namespace CTCI.Algorithms
 
             return null;
         }
+
+        /// <summary>
+        /// Given a SLLNode representing a SLL with a cycle, return node that starts the cycle
+        /// O(n) time, O(1) space
+        /// </summary>
+        /// <param name="head">SLLNode</param>
+        /// <returns>SLLNode</returns>
+        public static SLLNode LoopDetection(SLLNode head)
+        {
+            if (head == null)
+                return null;
+            if (head.Next == null)
+                return null;
+            
+            SLLNode slow = head.Next;
+            SLLNode fast = head.Next.Next;
+    
+            while (fast != slow)
+            {
+                fast = fast.Next.Next;
+                slow = slow.Next;
+            }
+
+            fast = head;
+            while (fast != slow)
+            {
+                fast = fast.Next;
+                slow = slow.Next;
+            }
+
+            return fast;
+        }
     }
 }

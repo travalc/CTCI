@@ -307,5 +307,42 @@ namespace CTCI.Algorithms.Test
             Assert.ReferenceEquals(commonCaseResult, commonCaseNextNext1);
             Assert.IsNull(noIntersectionResult);
         }
+
+        [TestMethod]
+        public void TestLoopDetection()
+        {
+            // Arrange
+            
+            // null head
+            SLLNode nullHead = null;
+
+            // single node
+            SLLNode singleNode = new SLLNode(1);
+
+            // common case
+            SLLNode commonCaseHead = new SLLNode(1);
+            SLLNode second = new SLLNode(2);
+            commonCaseHead.Next = second;
+            SLLNode third = new SLLNode(3);
+            second.Next = third;
+            SLLNode fourth = new SLLNode(4);
+            third.Next = fourth;
+            SLLNode fifth = new SLLNode(5);
+            fourth.Next = fifth;
+            SLLNode sixth = new SLLNode(6);
+            fifth.Next = sixth;
+            sixth.Next = third;
+
+            // Act
+            SLLNode nullHeadResult = LinkedLists.LoopDetection(nullHead);
+            SLLNode singleNodeResult = LinkedLists.LoopDetection(singleNode);
+            SLLNode commonCaseResult = LinkedLists.LoopDetection(commonCaseHead);
+
+            // Assert
+            Assert.IsNull(nullHeadResult);
+            Assert.IsNull(singleNodeResult);
+            Assert.AreEqual(third, commonCaseResult);
+
+        }
     }
 }
