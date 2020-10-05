@@ -39,5 +39,37 @@ namespace CTCI.Algorithms
 
             return false;
         }
+
+        /// <summary>
+        /// Method for constructing binary search tree from sorted ascending list of integers
+        /// O(log n) time, O(n) space
+        /// </summary>
+        /// <param name="list">List<int></param>
+        /// <returns>BSTNode</returns>
+        public static BSTNode MinimalTree(List<int> list)
+        {
+            if (list == null || list.Count == 0)
+                return null;
+            if (list.Count == 1)
+                return new BSTNode(list[0]);
+
+            BSTNode node;
+            if (list.Count == 2)
+            {
+                node = new BSTNode(list[list.Count - 1]);
+                BSTNode leftChild = new BSTNode(list[0]);
+                node.Left = leftChild;
+                return node;
+            }
+
+            int mid = list.Count / 2;
+            List<int> leftList = Helper.Slice(list, 0, mid);
+            List<int> rightList = Helper.Slice(list, mid + 1, list.Count);
+            node = new BSTNode(list[mid]);
+            node.Left = MinimalTree(leftList);
+            node.Right = MinimalTree(rightList);
+
+            return node;
+        }
     }
 }
