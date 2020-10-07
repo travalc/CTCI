@@ -117,5 +117,47 @@ namespace CTCI.Algorithms.Test
             Assert.IsNull(commonCaseList2Result.Right.Left.Left);
             Assert.IsNull(commonCaseList2Result.Right.Left.Right);
         }
+
+        [TestMethod]
+        public void TestListOfDepths()
+        {
+            // Arrange
+            
+            // null case
+            BTNode<int> nullNode = null;
+
+            // common case
+            BTNode<int> commonCaseRoot = new BTNode<int>(3);
+            BTNode<int> firstLevelLeft = new BTNode<int>(1);
+            BTNode<int> firstLevelRight = new BTNode<int>(8);
+            commonCaseRoot.Left = firstLevelLeft;
+            commonCaseRoot.Right = firstLevelRight;
+            BTNode<int> secondLevelLeftLeft = new BTNode<int>(0);
+            BTNode<int> secondLevelLeftRight = new BTNode<int>(2);
+            firstLevelLeft.Left = secondLevelLeftLeft;
+            firstLevelLeft.Right = secondLevelLeftRight;
+            BTNode<int> secondLevelRightLeft = new BTNode<int>(7);
+            BTNode<int> secondLevelRightRight = new BTNode<int>(9);
+            firstLevelRight.Left = secondLevelRightLeft;
+            firstLevelRight.Right = secondLevelRightRight;
+
+            // Act
+            List<SLLNode> nullNodeResult = TreesAndGraphs.ListOfDepths(nullNode);
+            List<SLLNode> commonCaseResult = TreesAndGraphs.ListOfDepths(commonCaseRoot);
+
+            // Assert
+            Assert.IsNull(nullNodeResult);
+            Assert.AreEqual(3, commonCaseResult.Count);
+            Assert.AreEqual(3, commonCaseResult[0].Data);
+            Assert.IsNull(commonCaseResult[0].Next);
+            Assert.AreEqual(1, commonCaseResult[1].Data);
+            Assert.AreEqual(8, commonCaseResult[1].Next.Data);
+            Assert.IsNull(commonCaseResult[1].Next.Next);
+            Assert.AreEqual(0, commonCaseResult[2].Data);
+            Assert.AreEqual(2, commonCaseResult[2].Next.Data);
+            Assert.AreEqual(7, commonCaseResult[2].Next.Next.Data);
+            Assert.AreEqual(9, commonCaseResult[2].Next.Next.Next.Data);
+            Assert.IsNull(commonCaseResult[2].Next.Next.Next.Next);
+        }
     }
 }

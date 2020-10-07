@@ -71,5 +71,71 @@ namespace CTCI.Algorithms
 
             return node;
         }
+
+        /// <summary>
+        /// Algorithm for representing levels of a Binary Tree as linked lists
+        /// O(n) time and space
+        /// </summary>
+        /// <param name="root">BTNode<int></param>
+        /// <returns>List<SLLNode></returns>
+        public static List<SLLNode> ListOfDepths(BTNode<int> root)
+        {
+            if (root == null)
+                return null;
+            
+            Dictionary<int, SLLNode> cache = new Dictionary<int, SLLNode>();
+            cache[1] = new SLLNode(root.Data);
+            ListOfDepthsHelper(root, 2, ref cache);
+
+            List<SLLNode> levelList = new List<SLLNode>();
+            foreach (KeyValuePair<int, SLLNode> pair in cache)
+            {
+                levelList.Add(pair.Value);
+            }
+            
+            return levelList;
+        }
+
+        private static void ListOfDepthsHelper(BTNode<int> currNode, int currLevel, ref Dictionary<int, SLLNode> cache)
+        {
+            if (currNode.Left == null && currNode.Right == null)
+                return;
+            
+            if (currNode.Left != null)
+            {
+                SLLNode leftNode = new SLLNode(currNode.Left.Data);
+                if (currNode.Right != null)
+                {
+                    SLLNode rightNode = new SLLNode(currNode.Right.Data);
+                    leftNode.Next = rightNode;
+                }
+                if (!cache.ContainsKey(currLevel))
+                    cache[currLevel] = leftNode;
+                else
+                    ListOfDepthsAddToSLLHelper(cache[currLevel], leftNode);
+            }
+            else
+            {
+                SLLNode rightNode = new SLLNode(currNode.Right.Data);
+                if (!cache.ContainsKey(currLevel))
+                    cache[currLevel] = rightNode;
+                else
+                    ListOfDepthsAddToSLLHelper(cache[currLevel], rightNode);
+            }
+
+            int nextLevel = currLevel + 1;
+            Console.WriteLine(currNode.Left.Data);
+            if (currNode.Left != null)
+                ListOfDepthsHelper(currNode.Left, nextLevel, ref cache);
+            if (currNode.Right != null)
+                ListOfDepthsHelper(currNode.Right, nextLevel, ref cache);
+        }
+
+        private static void ListOfDepthsAddToSLLHelper(SLLNode head, SLLNode tail)
+        {
+            while (head.Next != null)
+                head = head.Next;
+            head.Next = tail;
+        }
     }
 }

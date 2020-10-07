@@ -1,16 +1,27 @@
 namespace CTCI.DataStructures
 {
-    public class BSTNode
+    /// <summary>
+    /// Binary Tree Node class
+    /// </summary>
+    public class BTNode<T>
     {
-        public int Data { get; set; }
-        public BSTNode Left { get; set; }
-        public BSTNode Right { get; set; }
+        public T Data { get; set; }
+        public BTNode<T> Left { get; set; }
+        public BTNode<T> Right { get; set; }
 
-        public BSTNode (int data)
+        public BTNode (T data)
         {
             Data = data;
             Left = null;
             Right = null;
         }
+    }
+
+    /// <summary>
+    /// Binary Search Tree Node class, inherits from Binary Tree Node.
+    /// </summary>
+    public class BSTNode : BTNode<int>
+    {
+        public BSTNode(int data) : base(data) {}
     }
 }
