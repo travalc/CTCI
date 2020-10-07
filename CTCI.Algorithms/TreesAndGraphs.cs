@@ -137,5 +137,56 @@ namespace CTCI.Algorithms
                 head = head.Next;
             head.Next = tail;
         }
+
+        /// <summary>
+        /// Algorithm for determining if a binary tree is balanced (diff between subtree heights is <= 1)
+        /// O(n) time, space (call stack)
+        /// </summary>
+        /// <param name="root">BTNode<int></param>
+        /// <returns>bool</returns>
+        public static bool CheckBalanced(BTNode<int> root)
+        {
+            if (root == null)
+                return false;
+            if (root.Left == null && root.Right == null)
+                return true;
+            
+            int leftHeight, rightHeight;
+            if (root.Left == null)
+                leftHeight = 0;
+            else
+                leftHeight = GetHeight(root.Left);
+            if (root.Right == null)
+                rightHeight = 0;
+            else
+                rightHeight = GetHeight(root.Right);
+
+            return Math.Abs(leftHeight - rightHeight) <= 1;
+        }
+
+        private static int GetHeight(BTNode<int> node)
+        {
+            if (node.Left == null && node.Right == null)
+                return 1;
+            int leftHeight, rightHeight;
+            
+            if (node.Left == null)
+                leftHeight = 0;
+            else
+                leftHeight = GetHeight(node.Left);
+
+            if (node.Right == null)
+                rightHeight = 0;
+            else
+                rightHeight = GetHeight(node.Right);
+            
+            int max;
+            if (leftHeight >= rightHeight)
+                max = leftHeight;
+            else
+                max = rightHeight;
+            
+            return max + 1;
+        }
     }
 }

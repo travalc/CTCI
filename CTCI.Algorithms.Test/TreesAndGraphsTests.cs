@@ -159,5 +159,42 @@ namespace CTCI.Algorithms.Test
             Assert.AreEqual(9, commonCaseResult[2].Next.Next.Next.Data);
             Assert.IsNull(commonCaseResult[2].Next.Next.Next.Next);
         }
+
+        [TestMethod]
+        public void TestCheckBalanced()
+        {
+            // arrange
+
+            // null case
+            BTNode<int> nullRoot = null;
+
+            // single node case
+            BTNode<int> singleNode = new BTNode<int>(1);
+
+            // common case true
+            BTNode<int> trueRoot = new BTNode<int>(1);
+            trueRoot.Left = new BTNode<int>(2);
+            trueRoot.Left.Left = new BTNode<int>(4);
+            trueRoot.Right = new BTNode<int>(3);
+
+            // common case false
+            BTNode<int> falseRoot = new BTNode<int>(1);
+            falseRoot.Left = new BTNode<int>(2);
+            falseRoot.Right = new BTNode<int>(3);
+            falseRoot.Left.Right = new BTNode<int>(4);
+            falseRoot.Left.Right.Left = new BTNode<int>(5);
+
+            // Act
+            bool nullRootResult = TreesAndGraphs.CheckBalanced(nullRoot);
+            bool singleNodeResult = TreesAndGraphs.CheckBalanced(singleNode);
+            bool commonCaseTrueResult = TreesAndGraphs.CheckBalanced(trueRoot);
+            bool commonCaseFalseResult = TreesAndGraphs.CheckBalanced(falseRoot);
+
+            // Assert
+            Assert.IsFalse(nullRootResult);
+            Assert.IsTrue(singleNodeResult);
+            Assert.IsTrue(commonCaseTrueResult);
+            Assert.IsFalse(commonCaseFalseResult);
+        }
     }
 }
