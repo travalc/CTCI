@@ -163,7 +163,7 @@ namespace CTCI.Algorithms.Test
         [TestMethod]
         public void TestCheckBalanced()
         {
-            // arrange
+            // Arrange
 
             // null case
             BTNode<int> nullRoot = null;
@@ -195,6 +195,55 @@ namespace CTCI.Algorithms.Test
             Assert.IsTrue(singleNodeResult);
             Assert.IsTrue(commonCaseTrueResult);
             Assert.IsFalse(commonCaseFalseResult);
+        }
+
+        [TestMethod]
+        public void TestValidateBST()
+        {
+            // Arrange
+
+            // null case
+            BTNode<int> nullRoot = null;
+
+            // single node
+            BTNode<int> singleNode = new BTNode<int>(1);
+
+            // common case true
+            BTNode<int> commonCaseTrueRoot = new BTNode<int>(5);
+            commonCaseTrueRoot.Left = new BTNode<int>(2);
+            commonCaseTrueRoot.Left.Left = new BTNode<int>(1);
+            commonCaseTrueRoot.Left.Right = new BTNode<int>(3);
+            commonCaseTrueRoot.Right = new BTNode<int>(8);
+            commonCaseTrueRoot.Right = new BTNode<int>(6);
+
+            // common case false 1
+            BTNode<int> commonCaseFalseRoot1 = new BTNode<int>(3);
+            commonCaseFalseRoot1.Left = new BTNode<int>(1);
+            commonCaseFalseRoot1.Left.Left = new BTNode<int>(0);
+            commonCaseFalseRoot1.Left.Right = new BTNode<int>(4);
+            commonCaseFalseRoot1.Right = new BTNode<int>(5);
+            commonCaseFalseRoot1.Right.Left = new BTNode<int>(5);
+            commonCaseFalseRoot1.Right.Right = new BTNode<int>(7);
+
+            // common case false 2
+            BTNode<int> commonCaseFalseRoot2 = new BTNode<int>(4);
+            commonCaseFalseRoot2.Left = new BTNode<int>(2);
+            commonCaseFalseRoot2.Right = new BTNode<int>(6);
+            commonCaseFalseRoot2.Right.Left = new BTNode<int>(1);
+
+            // Act
+            bool nullRootResult = TreesAndGraphs.ValidateBST(nullRoot);
+            bool singleNodeResult = TreesAndGraphs.ValidateBST(singleNode);
+            bool commonCaseTrueResult = TreesAndGraphs.ValidateBST(commonCaseTrueRoot);
+            bool commonCaseFalseResult1 = TreesAndGraphs.ValidateBST(commonCaseFalseRoot1);
+            bool commonCaseFalseResult2 = TreesAndGraphs.ValidateBST(commonCaseFalseRoot2);
+
+            // Assert
+            Assert.IsFalse(nullRootResult);
+            Assert.IsTrue(singleNodeResult);
+            Assert.IsTrue(commonCaseTrueResult);
+            Assert.IsFalse(commonCaseFalseResult1);
+            Assert.IsFalse(commonCaseFalseResult2);
         }
     }
 }

@@ -188,5 +188,82 @@ namespace CTCI.Algorithms
             
             return max + 1;
         }
+
+
+        /// <summary>
+        /// Algorithm for validating if a Binary Tree is a Binary Search Tree
+        /// O(n^2) time, space due to deep copy of cached lists
+        /// </summary>
+        /// <param name="root">BTNode<int></param>
+        /// <returns>bool</returns>
+        public static bool ValidateBST(BTNode<int> root)
+        {
+            if (root == null)
+                return false;
+
+            List<int> greaterThan = new List<int>();
+            List<int> lessThan = new List<int>();
+            return ValidateBST(root, greaterThan, lessThan);
+        }
+
+        private static bool ValidateBST(BTNode<int> node, List<int> greaterThan, List<int> lessThan)
+        {
+            if (node.Left == null && node.Right == null)
+                return true;
+            
+            List<int> leftIsLessThan = new List<int>();
+            List<int> leftIsGreaterThan = new List<int>();
+            List<int> rightIsLessThan = new List<int>();
+            List<int> rightIsGreaterThan = new List<int>();
+            bool leftIsValid, rightIsValid;
+
+            if (node.Left == null)
+                leftIsValid = true;
+            else
+            {
+                if (node.Left.Data > node.Data)
+                    return false;
+                foreach(int num in lessThan)
+                {
+                    if (node.Left.Data > num)
+                        return false;
+                    leftIsLessThan.Add(num);
+                }
+                leftIsLessThan.Add(node.Data);
+
+                foreach(int num in greaterThan)
+                {
+                    if (node.Left.Data < num)
+                        return false;
+                    leftIsGreaterThan.Add(num);
+                }
+                leftIsValid = ValidateBST(node.Left, leftIsGreaterThan, leftIsLessThan);
+            }
+
+            if (node.Right == null)
+                rightIsValid = true;
+            else
+            {
+                if (node.Right.Data < node.Data)
+                    return false;
+                foreach (int num in greaterThan)
+                {
+                    if (node.Right.Data < num)
+                        return false;
+                    rightIsGreaterThan.Add(num);
+                }
+                rightIsGreaterThan.Add(node.Data);
+
+                foreach(int num in lessThan)
+                {
+                    if (node.Right.Data > num)
+                        return false;
+                    rightIsLessThan.Add(num);
+                }
+                rightIsValid = ValidateBST(node.Right, rightIsGreaterThan, rightIsLessThan);
+            }
+
+            return leftIsValid && rightIsValid;
+        }
     }
 }
