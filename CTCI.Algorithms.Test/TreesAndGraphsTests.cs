@@ -284,5 +284,58 @@ namespace CTCI.Algorithms.Test
             Assert.AreEqual(commonCaseRoot, commonCaseResult2);
             Assert.IsNull(commonCaseResult3);
         }
+
+        [TestMethod]
+        public void TestBuildOrder()
+        {
+            // Arrange
+            List<char> case1Projects = new List<char> { 'a', 'b', 'c', 'd', 'e', 'f'};
+            List<Tuple<char, char>> case1Dependencies = new List<Tuple<char, char>> { 
+                new Tuple<char, char> ('a', 'd'),
+                new Tuple<char, char> ('f', 'b'),
+                new Tuple<char, char> ('b', 'd'),
+                new Tuple<char, char> ('f', 'a'),
+                new Tuple<char, char> ('d', 'c')
+            };
+
+            List<char> case2Projects = new List<char> { 'a', 'b', 'c', 'd', 'e', 'f', 'g'};
+            List<Tuple<char, char>> case2Dependencies = new List<Tuple<char, char>> { 
+                new Tuple<char, char> ('a', 'd'),
+                new Tuple<char, char> ('f', 'b'),
+                new Tuple<char, char> ('b', 'd'),
+                new Tuple<char, char> ('f', 'a'),
+                new Tuple<char, char> ('d', 'c'),
+                new Tuple<char, char> ('g', 'b')
+            };
+
+            // Act
+            List<char> case1Result = TreesAndGraphs.BuildOrder(case1Projects, case1Dependencies);
+            List<char> case2Result = TreesAndGraphs.BuildOrder(case2Projects, case2Dependencies);
+
+            // Assert
+            List<char> case1Expected = new List<char> { 'f', 'e', 'b', 'a', 'd', 'c' };
+            CollectionAssert.AreEqual(case1Expected, case1Result);
+            List<char> case2Expected = new List<char> { 'f', 'g', 'e', 'b', 'a', 'd', 'c' };
+            CollectionAssert.AreEqual(case2Expected, case2Result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void TestBuildOrderException()
+        {
+            // Arrange
+            List<char> case1Projects = new List<char> { 'a', 'b', 'c', 'd', 'e', 'f'};
+            List<Tuple<char, char>> case1Dependencies = new List<Tuple<char, char>> { 
+                new Tuple<char, char> ('a', 'd'),
+                new Tuple<char, char> ('f', 'b'),
+                new Tuple<char, char> ('b', 'd'),
+                new Tuple<char, char> ('f', 'a'),
+                new Tuple<char, char> ('d', 'c'),
+                new Tuple<char, char> ('c', 'a'),
+            };
+
+            // Act
+            List<char> case1Result = TreesAndGraphs.BuildOrder(case1Projects, case1Dependencies);
+        }
     }
 }

@@ -292,5 +292,91 @@ namespace CTCI.Algorithms
                 currParent = currParent.Parent;
             return currParent;
         }
+
+        /// <summary>
+        /// Algorithm that uses breadth first search to determine a build order given list of projects and list of tuples representing dependencies
+        /// O(nLogn) run time, O(n) space
+        /// </summary>
+        /// <param name="projects">List<char></param>
+        /// <param name="dependencies">List<Tuple<char, char>></param>
+        /// <returns>List<char></returns>
+        public static List<char> BuildOrder(List<char> projects, List<Tuple<char, char>> dependencies)
+        {
+            if (projects == null || dependencies == null)
+                throw new Exception("Missing projects or dependencies");
+            
+            Dictionary<char, List<char>> projectsWithDependencies = new Dictionary<char, List<char>>();
+            Dictionary<char, List<char>> projectsWithDependents = new Dictionary<char, List<char>>();
+            List<char> projectsWithNoDependenciesOrDependents = new List<char>();
+            List<char> projectsWithDependentsButNoDependencies = new List<char>();
+
+            foreach (Tuple<char, char> pair in dependencies)
+            {
+                char dependent = pair.Item2;
+                char dependency = pair.Item1;
+                
+                if (projectsWithDependencies.ContainsKey(dependent))
+                    projectsWithDependencies[dependent].Add(dependency);
+                else
+                    projectsWithDependencies[dependent] = new List<char> { dependency };
+
+                if (projectsWithDependents.ContainsKey(dependency))
+                    projectsWithDependents[dependency].Add(dependent);
+                else
+                    projectsWithDependents[dependency] = new List<char> { dependent };
+            }
+
+            foreach (char project in projects)
+            {
+                if (!projectsWithDependencies.ContainsKey(project) && !projectsWithDependents.ContainsKey(project))
+                    projectsWithNoDependenciesOrDependents.Add(project);
+                if (!projectsWithDependencies.ContainsKey(project) && projectsWithDependents.ContainsKey(project))
+                    projectsWithDependentsButNoDependencies.Add(project);
+            }
+
+            List<char> buildOrder = new List<char>();
+            Queue<char> buildQueue = new Queue<char>();
+            HashSet<char> alreadyQueued = new HashSet<char>();
+            HashSet<char> alreadyBuilt = new HashSet<char>();
+            foreach (char project in projectsWithDependentsButNoDependencies)
+            {
+                buildQueue.Enqueue(project);
+                alreadyQueued.Add(project);
+            }
+            foreach (char project in projectsWithNoDependenciesOrDependents)
+            {
+                buildQueue.Enqueue(project);
+                alreadyQueued.Add(project);
+            }
+            while(buildQueue.Count > 0)
+            {
+                char project = buildQueue.Dequeue();
+                if (alreadyBuilt.Contains(project))
+                    throw new Exception("Invalid build order, circular dependency");
+                if (projectsWithDependents.ContainsKey(project))
+                {
+                    foreach(char dependent in projectsWithDependents[project])
+                    {
+                        if (alreadyBuilt.Contains(dependent))
+                            throw new Exception("Invalid build order, circular dependency");
+                        if (!alreadyQueued.Contains(dependent))
+                        {
+                            buildQueue.Enqueue(dependent);
+                            alreadyQueued.Add(dependent);
+                        }
+                    }
+                }
+                buildOrder.Add(project);
+                alreadyBuilt.Add(project);
+            }
+
+            foreach(char project in projects)
+            {
+                if (!alreadyBuilt.Contains(project))
+                    throw new Exception("Invalid build order, not all dependencies are built.");
+            }
+
+            return buildOrder;
+        }
     }
 }
