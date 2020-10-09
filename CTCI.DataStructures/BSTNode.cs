@@ -24,4 +24,16 @@ namespace CTCI.DataStructures
     {
         public BSTNode(int data) : base(data) {}
     }
+
+    /// <summary>
+    /// Binary search tree class with pointer to parent node
+    /// </summary>
+    public class BSTPNode : BSTNode
+    {
+        public BSTPNode Parent { get; set; }
+        public BSTPNode(int data, BSTPNode parent) : base(data)
+        {
+            Parent = parent;
+        }
+    }
 }

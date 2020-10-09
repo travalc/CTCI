@@ -245,5 +245,44 @@ namespace CTCI.Algorithms.Test
             Assert.IsFalse(commonCaseFalseResult1);
             Assert.IsFalse(commonCaseFalseResult2);
         }
+
+        [TestMethod]
+        public void TestSuccessor()
+        {
+            // Arrange
+
+            // null node
+            BSTPNode nullNode = null;
+
+            // single node
+            BSTPNode singleNode = new BSTPNode(1, null);
+
+            // common case
+            BSTPNode commonCaseRoot = new BSTPNode(10, null);
+            BSTPNode commonCaseLeft = new BSTPNode(7, commonCaseRoot);
+            BSTPNode commonCaseLeftRight = new BSTPNode(9, commonCaseLeft);
+            BSTPNode commonCaseLeftRightLeft = new BSTPNode(8, commonCaseLeftRight);
+            BSTPNode commonCaseRight = new BSTPNode(11, commonCaseRoot);
+
+            commonCaseRoot.Left = commonCaseLeft;
+            commonCaseRoot.Right = commonCaseRight;
+
+            commonCaseLeft.Right = commonCaseLeftRight;
+            commonCaseLeftRight.Left = commonCaseLeftRightLeft;
+
+            // Act
+            BSTPNode nullNodeResult = TreesAndGraphs.Successor(nullNode);
+            BSTPNode singleNodeResult = TreesAndGraphs.Successor(singleNode);
+            BSTPNode commonCaseResult1 = TreesAndGraphs.Successor(commonCaseLeft);
+            BSTPNode commonCaseResult2 = TreesAndGraphs.Successor(commonCaseLeftRight);
+            BSTPNode commonCaseResult3 = TreesAndGraphs.Successor(commonCaseRight);
+
+            // Assert
+            Assert.IsNull(nullNodeResult);
+            Assert.IsNull(singleNodeResult);
+            Assert.AreEqual(commonCaseLeftRightLeft, commonCaseResult1);
+            Assert.AreEqual(commonCaseRoot, commonCaseResult2);
+            Assert.IsNull(commonCaseResult3);
+        }
     }
 }

@@ -265,5 +265,32 @@ namespace CTCI.Algorithms
 
             return leftIsValid && rightIsValid;
         }
+
+        /// <summary>
+        /// Algorithm that returns the next sequential node (ascending) when given a binary search tree node. Nodes in the tree have access to parent.
+        /// O(n) time, O(1) space
+        /// </summary>
+        /// <param name="node">BSTPNode</param>
+        /// <returns>BSTPNode</returns>
+        public static BSTPNode Successor(BSTPNode node)
+        {
+            if (node == null)
+                return null;
+            
+            if (node.Right != null)
+            {
+                BSTPNode currChild = (BSTPNode)node.Right;
+                while (currChild.Left != null)
+                    currChild = (BSTPNode)currChild.Left;
+                return currChild;
+            }
+            
+            BSTPNode currParent = node.Parent;
+            if (currParent == null)
+                return null;
+            while (currParent != null && currParent.Data < node.Data)
+                currParent = currParent.Parent;
+            return currParent;
+        }
     }
 }
