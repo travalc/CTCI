@@ -378,5 +378,41 @@ namespace CTCI.Algorithms
 
             return buildOrder;
         }
+
+        /// <summary>
+        /// Algorithm for getting first common ancestor in binary tree for 2 nodes. Uses post-order traversal depth first search
+        /// O(2^n) runtime, O(n) space
+        /// </summary>
+        /// <param name="root">BTNode<int></param>
+        /// <param name="nodeA">BTNode<int></param>
+        /// <param name="nodeB">BTNode<int></param>
+        /// <returns></returns>
+        public static BTNode<int> FirstCommonAncestor(BTNode<int> root, BTNode<int> nodeA, BTNode<int> nodeB)
+        {
+            if (root == null || nodeA == null || nodeB == null)
+                return null;
+            
+            BTNode<int> fcaInLeft = FirstCommonAncestor(root.Left, nodeA, nodeB);
+            if (fcaInLeft != null)
+                return fcaInLeft;
+            BTNode<int> fcaInRight = FirstCommonAncestor(root.Right, nodeA, nodeB);
+            if (fcaInRight != null)
+                return fcaInRight;
+            
+            if ((ChildFound(root.Left, nodeA) && ChildFound(root.Right, nodeB)) || (ChildFound(root.Left, nodeB) && ChildFound(root.Right, nodeA)))
+                return root;
+
+            return null;
+        }
+
+        private static bool ChildFound(BTNode<int> currNode, BTNode<int> child)
+        {
+            if (currNode == null)
+                return false;
+            if (currNode == child)
+                return true;
+            
+            return ChildFound(currNode.Left, child) || ChildFound(currNode.Right, child);
+        }
     }
 }

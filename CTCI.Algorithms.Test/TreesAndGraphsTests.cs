@@ -337,5 +337,47 @@ namespace CTCI.Algorithms.Test
             // Act
             List<char> case1Result = TreesAndGraphs.BuildOrder(case1Projects, case1Dependencies);
         }
+
+        [TestMethod]
+        public void TestFirstCommonAncestor()
+        {
+            // Arrange
+
+            // null case
+            BTNode<int> nullRoot = null;
+            BTNode<int> nullCaseA = new BTNode<int>(1);
+            BTNode<int> nullCaseB = new BTNode<int>(2);
+
+            // common cases
+            BTNode<int> commonCaseRoot = new BTNode<int>(6);
+            BTNode<int> commonNode4 = new BTNode<int>(4);
+            BTNode<int> commonNode8 = new BTNode<int>(8);
+            commonCaseRoot.Left = commonNode4;
+            commonCaseRoot.Right = commonNode8;
+            BTNode<int> commonNode1 = new BTNode<int>(1);
+            BTNode<int> commonNode5 = new BTNode<int>(5);
+            commonNode4.Left = commonNode1;
+            commonNode4.Right = commonNode5;
+            BTNode<int> commonNode0 = new BTNode<int>(0);
+            BTNode<int> commonNode3 = new BTNode<int>(3);
+            commonNode1.Left = commonNode0;
+            commonNode1.Right = commonNode3;
+            BTNode<int> commonNode7 = new BTNode<int>(7);
+            BTNode<int> commonNode9 = new BTNode<int>(9);
+            commonNode8.Left = commonNode7;
+            commonNode8.Right = commonNode9;
+
+            // Act
+            BTNode<int> nullResult = TreesAndGraphs.FirstCommonAncestor(nullRoot, nullCaseA, nullCaseB);
+            BTNode<int> commonCaseResult1 = TreesAndGraphs.FirstCommonAncestor(commonCaseRoot, commonNode3, commonNode5);
+            BTNode<int> commonCaseResult2 = TreesAndGraphs.FirstCommonAncestor(commonCaseRoot, commonNode0, commonNode9);
+            BTNode<int> commonCaseResult3 = TreesAndGraphs.FirstCommonAncestor(commonCaseRoot, commonNode9, commonNode7);
+
+            // Assert
+            Assert.IsNull(nullResult);
+            Assert.AreEqual(commonNode4, commonCaseResult1);
+            Assert.AreEqual(commonCaseRoot, commonCaseResult2);
+            Assert.AreEqual(commonNode8, commonCaseResult3);
+        }
     }
 }
