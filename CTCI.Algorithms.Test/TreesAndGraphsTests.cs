@@ -379,5 +379,31 @@ namespace CTCI.Algorithms.Test
             Assert.AreEqual(commonCaseRoot, commonCaseResult2);
             Assert.AreEqual(commonNode8, commonCaseResult3);
         }
+
+        [TestMethod]
+        public void TestCheckSubtree()
+        {
+            // Arrange
+            BTNode<int> root1 = new BTNode<int>(8);
+            root1.Right = new BTNode<int>(9);
+            root1.Left = new BTNode<int>(2);
+            root1.Left.Left = new BTNode<int>(1);
+            root1.Left.Right = new BTNode<int>(4);
+            root1.Left.Right.Left = new BTNode<int>(3);
+            root1.Left.Right.Right = new BTNode<int>(6);
+            root1.Left.Right.Right.Right = new BTNode<int>(7);
+
+            BTNode<int> root2 = new BTNode<int>(2);
+            root2.Left = new BTNode<int>(1);
+            root2.Right = new BTNode<int>(4);
+            root2.Right.Left = new BTNode<int>(3);
+            root2.Right.Right = new BTNode<int>(6);
+
+            // Act
+            bool isSubtree = TreesAndGraphs.CheckSubtree(root1.Left, root2);
+
+            // Assert
+            Assert.IsTrue(isSubtree);
+        }
     }
 }

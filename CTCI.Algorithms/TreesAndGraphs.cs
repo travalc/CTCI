@@ -414,5 +414,53 @@ namespace CTCI.Algorithms
             
             return ChildFound(currNode.Left, child) || ChildFound(currNode.Right, child);
         }
+
+        /// <summary>
+        /// Algorithm for checking if one binary tree is a subtree of another
+        /// O(n + km) runtime, where m is number of nodes in second tree, and k is number of nodes in bigger tree where node == root of second tree. O(log(n)) space
+        /// </summary>
+        /// <param name="root1">BTNode<int></param>
+        /// <param name="root2">BTNode<int></param>
+        /// <returns>bool</returns>
+        public static bool CheckSubtree(BTNode<int> root1, BTNode<int> root2)
+        {
+            if (root1 == null || root2 == null)
+                return false;
+            
+            if (root1.Data == root2.Data)
+            {
+                bool validSubtree = ValidateSubtree(root1, root2);
+                if (validSubtree)
+                    return true;
+            }
+
+            bool checkLeft = CheckSubtree(root1.Left, root2);
+            bool checkRight = CheckSubtree(root1.Right, root2);
+            if (checkLeft || checkRight)
+                return true;
+            return false;
+        }
+
+        private static bool ValidateSubtree(BTNode<int> root1, BTNode<int> root2)
+        {
+            if (root2.Left != null || root2.Right != null)
+            {
+                if (root1.Left.Data != root2.Left.Data || root1.Right.Data != root2.Right.Data)
+                    return false;
+                
+                bool leftMatch, rightMatch;
+                if (root2.Left == null && root1.Left == null)
+                    leftMatch = true;
+                else
+                    leftMatch = ValidateSubtree(root1.Left, root2.Left);
+                if (root2.Right == null & root1.Right == null)
+                    rightMatch = true;
+                else
+                    rightMatch = ValidateSubtree(root1.Right, root2.Right);
+                return leftMatch && rightMatch;
+            }
+
+            return root1.Data == root2.Data;
+        }
     }
 }
