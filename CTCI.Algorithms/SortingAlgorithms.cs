@@ -66,5 +66,40 @@ namespace CTCI.Algorithms
             for (int i = 0; i < remaining; i ++)
                 arr[curr + i] = copy[leftCurr + i];
         }
+
+        /// <summary>
+        /// Bubble sort algorithm
+        /// O(n^2) runtime, O(1) space
+        /// </summary>
+        /// <param name="arr"></param>
+        public static void BubbleSort(int[] arr)
+        {
+            if (arr.Length < 2)
+                return;
+
+            bool swapsMade;
+            int p1 = 0;
+            int p2 = 1;
+
+            do
+            {
+                swapsMade = false;
+                while (p2 < arr.Length)
+                {
+                    if (arr[p2] < arr[p1])
+                    {
+                        int temp = arr[p1];
+                        arr[p1] = arr[p2];
+                        arr[p2] = temp;
+                        swapsMade = true;
+                    }
+                    p1 ++;
+                    p2 ++;
+                }
+                p1 = 0;
+                p2 = 1;
+            }
+            while (swapsMade);
+        }
     }
 }
