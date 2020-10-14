@@ -462,5 +462,51 @@ namespace CTCI.Algorithms
 
             return root1.Data == root2.Data;
         }
+
+        /// <summary>
+        /// Algorithm for getting all possible paths in a binary tree that add up to a given sum
+        /// O(n) time, O(n) space
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="sum"></param>
+        /// <returns></returns>
+        public static int PathsWithSum(BTNode<int> root, int sum)
+        {
+            if (root == null)
+                return 0;
+            
+            Dictionary<int, int> cache = new Dictionary<int, int>();
+            GetAllSums(root, new List<int>(), ref cache);
+            if (!cache.ContainsKey(sum))
+                return 0;
+            
+            return cache[sum];
+        }
+
+        private static void GetAllSums(BTNode<int> currNode, List<int> prevSums, ref Dictionary<int, int> cache)
+        {
+            if (currNode == null)
+                return;
+            
+            List<int> currSums = new List<int>();
+            foreach(int prevSum in prevSums)
+            {
+                int currSum = prevSum + currNode.Data;
+                if (!cache.ContainsKey(currSum))
+                    cache.Add(currSum, 1);
+                else
+                    cache[currSum] ++;
+                currSums.Add(currSum);
+            }
+
+            if (!cache.ContainsKey(currNode.Data))
+                cache.Add(currNode.Data, 1);
+            else
+                cache[currNode.Data] ++;
+            currSums.Add(currNode.Data);
+
+            GetAllSums(currNode.Left, currSums, ref cache);
+            GetAllSums(currNode.Right, currSums, ref cache);
+        }
     }
 }

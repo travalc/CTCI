@@ -405,5 +405,28 @@ namespace CTCI.Algorithms.Test
             // Assert
             Assert.IsTrue(isSubtree);
         }
+
+        [TestMethod]
+        public void TestPathsWithSum()
+        {
+            // Arrange
+            BTNode<int> root = new BTNode<int>(5);
+            root.Left = new BTNode<int>(2);
+            root.Left.Right = new BTNode<int>(-7);
+            root.Left.Right.Left = new BTNode<int>(5);
+            root.Right = new BTNode<int>(-20);
+            root.Right.Left = new BTNode<int>(9);
+            root.Right.Left.Right = new BTNode<int>(4);
+            root.Right.Left.Right.Left = new BTNode<int>(7);
+            root.Right.Right = new BTNode<int>(8);
+            int sum = -12;
+            int expected = 1;
+
+            // Act
+            int actual = TreesAndGraphs.PathsWithSum(root, sum);
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
