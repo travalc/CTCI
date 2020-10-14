@@ -101,5 +101,35 @@ namespace CTCI.Algorithms
             }
             while (swapsMade);
         }
+
+        /// <summary>
+        /// Selection sort algorithm
+        /// O(n^2) runtime, O(1) memory
+        /// </summary>
+        /// <param name="arr"></param>
+        public static void SelectionSort(int[] arr)
+        {
+            if (arr.Length < 2)
+                return;
+            
+            int curr = 0;
+            int smallestIndex = 0;
+            while (curr < arr.Length)
+            {
+                for (int i = curr + 1; i < arr.Length; i ++)
+                {
+                    if (arr[i] < arr[smallestIndex])
+                        smallestIndex = i;
+                }
+                if (curr != smallestIndex)
+                {
+                    int temp = arr[curr];
+                    arr[curr] = arr[smallestIndex];
+                    arr[smallestIndex] = temp;
+                }
+                curr ++;
+                smallestIndex = curr;
+            }
+        }
     }
 }
