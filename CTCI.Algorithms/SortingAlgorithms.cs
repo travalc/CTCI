@@ -131,5 +131,50 @@ namespace CTCI.Algorithms
                 smallestIndex = curr;
             }
         }
+
+        /// <summary>
+        /// Algorithm for quick sort, partitioning by mid element
+        /// Base case - O(nLog(n)) runtime, worst case - O(n^2), O(log(n)) memory
+        /// </summary>
+        /// <param name="arr"></param>
+        public static void QuickSort(int[] arr)
+        {
+            if (arr.Length < 2)
+                return;
+            int low = 0;
+            int high = arr.Length - 1;
+            QuickSort(arr, low, high);
+        }
+
+        private static void QuickSort(int[] arr, int low, int high)
+        {
+            int idx = Partition(arr, low, high);
+            if (low < idx - 1)
+                QuickSort(arr, low, idx - 1);
+            if (idx < high)
+                QuickSort(arr, idx, high);
+        
+        }
+
+        private static int Partition(int[] arr, int low, int high)
+        {
+            int pivot = (low + high) / 2;
+            while (low <= high)
+            {
+                while (arr[low] < arr[pivot])
+                    low ++;
+                while (arr[high] > arr[pivot])
+                    high --;
+                if (arr[low] >= arr[high])
+                {
+                    int temp = arr[low];
+                    arr[low] = arr[high];
+                    arr[high] = temp;
+                    low ++;
+                    high --;
+                }
+            }
+            return low;
+        }
     }
 }
